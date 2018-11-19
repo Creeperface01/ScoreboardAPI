@@ -1,7 +1,7 @@
 Example plugin usage
 -------------
 
-````
+```kotlin
     @EventHandler
     fun onJoin(e: PlayerJoinEvent) {
         val p = e.player
@@ -34,4 +34,4 @@ Example plugin usage
             scoreboard.update()
         }, 80, 20)
     }
-````
+```
