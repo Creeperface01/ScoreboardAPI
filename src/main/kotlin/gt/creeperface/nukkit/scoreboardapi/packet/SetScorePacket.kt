@@ -41,6 +41,6 @@ data class SetScorePacket(val action: Action, val infos: List<ScoreInfo>) : Data
     }
 
     companion object {
-        const val NETWORK_ID = 108.toByte()
+        const val NETWORK_ID = 0x6c.toByte()
     }
 }

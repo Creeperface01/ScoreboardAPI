@@ -15,9 +15,20 @@ class Objective(val name: String, val criteria: ObjectiveCriteria) {
     private val modified = LongOpenHashSet()
     private val renamed = LongOpenHashSet()
 
+    var needResend = false
+        private set
+
     private var cachedPacket: SetScorePacket? = null
 
-    lateinit var displayName: String
+    var displayName = ""
+        set(value) {
+            if (value == field) { //nothing changed
+                return
+            }
+
+            field = value
+            needResend = true
+        }
 
     fun setScore(id: Long, name: String, score: Int) {
         val old = scores[id]
@@ -25,9 +36,11 @@ class Objective(val name: String, val criteria: ObjectiveCriteria) {
         scores[id] = Score(id, name, score)
         clearCache()
 
-        old?.let {
+        if (old != null) {
             if (old.name != name) {
                 renamed.add(id)
+            } else if (old.value == score) {
+                return //nothing changed
             }
         }
 
@@ -37,10 +50,12 @@ class Objective(val name: String, val criteria: ObjectiveCriteria) {
     fun getScore(id: Long): Score? = scores.get(id)
 
     fun resetScore(id: Long) {
-        scores.remove(id)
+        val score = scores.remove(id)
         renamed.remove(id)
 
-        modified.add(id)
+        score?.let {
+            modified.add(id)
+        }
     }
 
     fun getChanges(): List<SetScorePacket> {
@@ -111,6 +126,7 @@ class Objective(val name: String, val criteria: ObjectiveCriteria) {
 
     fun resetChanges() {
         modified.clear()
+        needResend = false
     }
 
     fun clearCache() {

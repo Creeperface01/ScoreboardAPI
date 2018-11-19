@@ -19,6 +19,6 @@ data class RemoveObjectivePacket(var objectiveName: String) : DataPacket() {
     }
 
     companion object {
-        const val NETWORK_ID = 106.toByte()
+        const val NETWORK_ID = 0x6a.toByte()
     }
 }
