@@ -6,7 +6,7 @@ import gt.creeperface.nukkit.scoreboardapi.packet.data.ScoreInfo
 /**
  * @author CreeperFace
  */
-class SetScorePacket(val action: Action, val infos: List<ScoreInfo>) : DataPacket() {
+data class SetScorePacket(val action: Action, val infos: List<ScoreInfo>) : DataPacket() {
 
     override fun pid() = NETWORK_ID
 

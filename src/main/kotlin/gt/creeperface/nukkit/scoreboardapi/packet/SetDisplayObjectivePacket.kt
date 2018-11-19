@@ -6,7 +6,7 @@ import gt.creeperface.nukkit.scoreboardapi.scoreboard.DisplayObjective
 /**
  * @author CreeperFace
  */
-class SetDisplayObjectivePacket(val displayObjective: DisplayObjective) : DataPacket() {
+data class SetDisplayObjectivePacket(val displayObjective: DisplayObjective) : DataPacket() {
 
     override fun pid() = NETWORK_ID
 

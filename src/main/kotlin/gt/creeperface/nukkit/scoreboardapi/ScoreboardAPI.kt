@@ -9,6 +9,8 @@ import gt.creeperface.nukkit.scoreboardapi.packet.RemoveObjectivePacket
 import gt.creeperface.nukkit.scoreboardapi.packet.SetDisplayObjectivePacket
 import gt.creeperface.nukkit.scoreboardapi.packet.SetScorePacket
 import gt.creeperface.nukkit.scoreboardapi.scoreboard.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * @author CreeperFace
@@ -49,7 +51,12 @@ class ScoreboardAPI : PluginBase(), Listener {
         scoreboard.objective = dobj
 
         server.scheduler.scheduleDelayedTask(this, {
-            scoreboard.spawnTo(p)
+            scoreboard.addPlayer(p)
         }, 60)
+
+        server.scheduler.scheduleDelayedRepeatingTask(this, {
+            obj.setScore(5, SimpleDateFormat("mm:ss").format(Date(System.currentTimeMillis())), 12)
+            scoreboard.update()
+        }, 80, 20)
     }
 }

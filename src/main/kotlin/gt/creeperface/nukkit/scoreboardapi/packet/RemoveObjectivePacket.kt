@@ -5,7 +5,7 @@ import cn.nukkit.network.protocol.DataPacket
 /**
  * @author CreeperFace
  */
-class RemoveObjectivePacket(var objectiveName: String) : DataPacket() {
+data class RemoveObjectivePacket(var objectiveName: String) : DataPacket() {
 
     override fun pid() = NETWORK_ID
 

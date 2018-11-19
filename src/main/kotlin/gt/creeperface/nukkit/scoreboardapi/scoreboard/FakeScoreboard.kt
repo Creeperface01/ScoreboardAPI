@@ -23,6 +23,8 @@ class FakeScoreboard : Scoreboard {
                 Server.broadcastPacket(players.values, pk)
             }
         }
+
+        objective.objective.resetChanges()
     }
 
     override fun addPlayer(p: Player) {
