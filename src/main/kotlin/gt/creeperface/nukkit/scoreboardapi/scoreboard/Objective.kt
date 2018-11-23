@@ -49,6 +49,8 @@ class Objective(val name: String, val criteria: ObjectiveCriteria) {
 
     fun getScore(id: Long): Score? = scores.get(id)
 
+    fun getAllScores() = Long2ObjectOpenHashMap(scores)
+
     fun resetScore(id: Long) {
         val score = scores.remove(id)
         renamed.remove(id)
@@ -56,6 +58,14 @@ class Objective(val name: String, val criteria: ObjectiveCriteria) {
         score?.let {
             modified.add(id)
         }
+    }
+
+    fun resetAllScores() {
+        renamed.clear()
+        modified.clear()
+
+        modified.addAll(scores.keys)
+        scores.clear()
     }
 
     fun getChanges(): List<SetScorePacket> {
