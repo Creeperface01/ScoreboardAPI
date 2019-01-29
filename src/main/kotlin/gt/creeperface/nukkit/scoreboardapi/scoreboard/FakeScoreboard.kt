@@ -16,18 +16,18 @@ class FakeScoreboard : Scoreboard {
     override lateinit var objective: DisplayObjective
 
     override fun update() {
+        val pks = objective.objective.getChanges()
+
+        if (pks.isNotEmpty()) {
+            pks.forEach { pk ->
+                Server.broadcastPacket(players.values, pk)
+            }
+        }
+
         if (objective.objective.needResend) {
             players.forEach { _, p ->
                 despawnFrom(p)
                 spawnTo(p)
-            }
-        } else {
-            val pks = objective.objective.getChanges()
-
-            if (pks.isNotEmpty()) {
-                pks.forEach { pk ->
-                    Server.broadcastPacket(players.values, pk)
-                }
             }
         }
 

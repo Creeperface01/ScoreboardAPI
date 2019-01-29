@@ -69,7 +69,7 @@ class Objective(val name: String, val criteria: ObjectiveCriteria) {
     }
 
     fun getChanges(): List<SetScorePacket> {
-        if(modified.isEmpty()) {
+        if (modified.isEmpty()) {
             return emptyList()
         }
 
@@ -77,7 +77,7 @@ class Objective(val name: String, val criteria: ObjectiveCriteria) {
         val removeList = mutableListOf<ScoreInfo>()
 
         modified.forEach { id ->
-            if(scores.containsKey(id)) {
+            if (scores.containsKey(id)) {
                 val score = getScore(id)
 
                 score?.let {
@@ -101,11 +101,11 @@ class Objective(val name: String, val criteria: ObjectiveCriteria) {
         val packets = mutableListOf<SetScorePacket>()
 
         if (removeList.isNotEmpty()) {
-            packets.add(SetScorePacket(SetScorePacket.Action.REMOVE, removeList))
+            packets.addAll(removeList.map { SetScorePacket(SetScorePacket.Action.REMOVE, listOf(it)) })
         }
 
-        if(setList.isNotEmpty()) {
-            packets.add(SetScorePacket(SetScorePacket.Action.SET, setList))
+        if (setList.isNotEmpty()) {
+            packets.addAll(setList.map { SetScorePacket(SetScorePacket.Action.SET, listOf(it)) })
         }
 
         return packets
@@ -116,7 +116,7 @@ class Objective(val name: String, val criteria: ObjectiveCriteria) {
             return it
         }
 
-        if(scores.isEmpty()) {
+        if (scores.isEmpty()) {
             return null
         }
 
