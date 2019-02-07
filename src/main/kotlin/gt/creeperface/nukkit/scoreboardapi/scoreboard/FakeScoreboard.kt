@@ -9,7 +9,7 @@ import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap
 /**
  * @author CreeperFace
  */
-class FakeScoreboard : Scoreboard {
+open class FakeScoreboard : Scoreboard {
 
     private val players = Long2ObjectOpenHashMap<Player>()
 

@@ -68,7 +68,7 @@ class Objective(val name: String, val criteria: ObjectiveCriteria) {
         scores.clear()
     }
 
-    fun getChanges(): List<SetScorePacket> {
+    internal fun getChanges(): List<SetScorePacket> {
         if (modified.isEmpty()) {
             return emptyList()
         }
@@ -111,7 +111,7 @@ class Objective(val name: String, val criteria: ObjectiveCriteria) {
         return packets
     }
 
-    fun getScorePacket(): SetScorePacket? {
+    internal fun getScorePacket(): SetScorePacket? {
         cachedPacket?.let {
             return it
         }

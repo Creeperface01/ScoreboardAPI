@@ -1,5 +1,27 @@
 Example plugin usage
--------------
+-
+
+##### Simple scoreboard example
+
+```kotlin
+    @EventHandler
+    fun onJoin(e: PlayerJoinEvent) {
+        val p = e.player
+
+        val sb = builder().build()
+        sb.setDisplayName("${TextFormat.GREEN}Test Scoreboard")
+        sb.setScore(1, "${TextFormat.RED} ---------------  ", 1)
+        sb.setScore(2, "test 2", 2)
+        sb.setScore(3, "test 3", 3)
+        sb.setScore(4, "test 4", 4)
+        sb.setScore(5, "test 5", 5)
+        sb.setScore(6, "test 6", 6)
+
+        sb.addPlayer(p)
+    }
+```
+
+##### More complex scoreboard example
 
 ```kotlin
     @EventHandler
