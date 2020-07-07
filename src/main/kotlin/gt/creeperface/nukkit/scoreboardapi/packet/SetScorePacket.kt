@@ -19,8 +19,11 @@ data class SetScorePacket(val action: Action, val infos: List<ScoreInfo>) : Data
             putVarLong(it.scoreId)
             putString(it.objective)
             putLInt(it.score)
-            putByte(Type.FAKE.ordinal.toByte()) //always fake for now
-            putString(it.name)
+
+            if (action == Action.SET) {
+                putByte(Type.FAKE.ordinal.toByte()) //always fake for now
+                putString(it.name)
+            }
         }
     }
 
