@@ -1,5 +1,6 @@
 package gt.creeperface.nukkit.scoreboardapi
 
+import cn.nukkit.Player
 import cn.nukkit.event.EventHandler
 import cn.nukkit.event.Listener
 import cn.nukkit.event.player.PlayerJoinEvent
@@ -15,6 +16,10 @@ internal class Test(private val api: ScoreboardAPI) : Listener {
     fun onJoin(e: PlayerJoinEvent) {
         val p = e.player
 
+        test2(p)
+    }
+
+    fun test1(p: Player) {
         val scoreboard = FakeScoreboard()
         val obj = Objective("scoreboard", ObjectiveCriteria("dummy", false))
         val dobj = DisplayObjective(obj, ObjectiveSortOrder.DESCENDING, ObjectiveDisplaySlot.SIDEBAR)
@@ -55,5 +60,66 @@ internal class Test(private val api: ScoreboardAPI) : Listener {
             }
             time = 2
         }, 40)
+    }
+
+    fun test2(p: Player) {
+        val scoreboard = ScoreboardAPI.builder().build()
+        scoreboard.setDisplayName("Test name")
+
+        fun text1() {
+            for (i in 0 until 5) {
+                scoreboard.setScore(i.toLong(), "$i", i)
+            }
+        }
+
+        fun text2() {
+            for (i in 0 until 5) {
+                scoreboard.setScore(i.toLong(), "${i * 10}", i)
+            }
+        }
+
+        var counter = -5
+        api.server.scheduler.scheduleDelayedRepeatingTask(api, {
+            p.sendMessage(counter.toString())
+            when (counter++) {
+                5 -> {
+                    text1()
+                    scoreboard.update()
+                }
+                10 -> {
+                    text2()
+                    scoreboard.update()
+                }
+                15 -> {
+                    scoreboard.resetAllScores()
+                    scoreboard.update()
+                }
+//                20 -> {
+//                    text1()
+//                    scoreboard.update()
+//                }
+//                30 -> {
+//                    scoreboard.resetAllScores()
+//                    text2()
+//                    scoreboard.update()
+//                }
+                20 -> {
+                    scoreboard.setScore(0, "0 - switch1", 0)
+                    scoreboard.update()
+                    scoreboard.setScore(1, "1 - switch1", 1)
+                    scoreboard.update()
+                }
+                25 -> {
+                    scoreboard.setScore(0, "0 - switch2", 0)
+                    scoreboard.update()
+                    scoreboard.setScore(1, "1 - switch2", 1)
+                    scoreboard.update()
+                }
+            }
+        }, 20, 20)
+
+        api.server.scheduler.scheduleDelayedTask(api, {
+            scoreboard.addPlayer(p)
+        }, 60)
     }
 }

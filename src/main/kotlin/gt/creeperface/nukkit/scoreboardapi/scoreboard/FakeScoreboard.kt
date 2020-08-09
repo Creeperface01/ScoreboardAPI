@@ -25,7 +25,7 @@ open class FakeScoreboard : Scoreboard {
         }
 
         if (objective.objective.needResend) {
-            players.forEach { _, p ->
+            players.forEach { (_, p) ->
                 despawnFrom(p)
                 spawnTo(p)
             }

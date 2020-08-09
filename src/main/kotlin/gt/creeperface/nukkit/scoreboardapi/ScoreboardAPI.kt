@@ -21,6 +21,10 @@ class ScoreboardAPI : PluginBase() {
         server.network.registerPacket(SetScorePacket.NETWORK_ID, SetScorePacket::class.java)
     }
 
+//    override fun onEnable() {
+//        Test(this)
+//    }
+
     companion object {
 
         @JvmStatic

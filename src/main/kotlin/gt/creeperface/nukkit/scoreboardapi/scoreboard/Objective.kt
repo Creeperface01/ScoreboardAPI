@@ -42,6 +42,8 @@ class Objective(val name: String, val criteria: ObjectiveCriteria) {
             } else if (old.value == score) {
                 return //nothing changed
             }
+        } else if (modified.contains(id)) {
+            renamed.add(id)
         }
 
         modified.add(id)
@@ -122,7 +124,7 @@ class Objective(val name: String, val criteria: ObjectiveCriteria) {
 
         val infos = mutableListOf<ScoreInfo>()
 
-        scores.forEach { id, score ->
+        scores.forEach { (id, score) ->
             infos.add(ScoreInfo(id, this.name, score.value, score.name))
         }
 
@@ -136,6 +138,7 @@ class Objective(val name: String, val criteria: ObjectiveCriteria) {
 
     fun resetChanges() {
         modified.clear()
+        renamed.clear()
         needResend = false
     }
 
